@@ -14,28 +14,28 @@ This repository contains the C implementation and supporting documentation for a
 
 ### 2. Objective
 
-[cite_start]The principal objective of this programming assignment is twofold: first, to design and implement a tractable solution to the Constrained Utility-Based Allocation problem [cite: 25][cite_start]; and second, to demonstrate the algorithmic reasoning behind the choices made, particularly the trade-off between optimality and efficiency[cite: 26].
+The principal objective of this programming assignment is twofold: first, to design and implement a tractable solution to the Constrained Utility-Based Allocation problem ; and second, to demonstrate the algorithmic reasoning behind the choices made, particularly the trade-off between optimality and efficiency.
 
 The core computational task is to find a set of diagnostic tests $\mathcal{S} \subseteq T_{\text{set}}$ such that:
 
-[cite_start]**Maximize:** $Total~Utility=\sum_{i\in\mathcal{S}}(W_{Crit,k}\times W_{Surv,k})$ [cite: 28]
+**Maximize:** $Total~Utility=\sum_{i\in\mathcal{S}}(W_{Crit,k}\times W_{Surv,k})$ 
 
 **Subject to:**
-* [cite_start]$C_{Marginal,i} \le B_{Max}$ [cite: 30, 31]
-* [cite_start]$Feasibility(T_{i})$ holds for all $T_{i}\in\mathcal{S}$ [cite: 32]
-* [cite_start]$Equity~Count \ge T_{Equity}$ [cite: 33]
+* $C_{Marginal,i} \le B_{Max}$ 
+* $Feasibility(T_{i})$ holds for all $T_{i}\in\mathcal{S}$ 
+* $Equity~Count \ge T_{Equity}$ 
 
-[cite_start]The algorithm must effectively manage the state changes associated with resource consumption and marginal cost, demonstrating a robust technique for constraint propagation (via the Future Feasibility Check) that prevents local optimization from leading to future resource insolvency[cite: 34].
+The algorithm must effectively manage the state changes associated with resource consumption and marginal cost, demonstrating a robust technique for constraint propagation (via the Future Feasibility Check) that prevents local optimization from leading to future resource insolvency.
 
 ---
 
 ### 3. Functionality
 
-[cite_start]The allocation is executed through a two-phase greedy process to ensure policy compliance before profit maximization[cite: 36].
+The allocation is executed through a two-phase greedy process to ensure policy compliance before profit maximization.
 
 #### Phase 1: Equity Enforcement
 
-[cite_start]This initial phase is strictly mandatory and operates as a pre-processing constraint to satisfy the $T_{Equity}$ policy[cite: 38]. [cite_start]The algorithm first identifies the subset of tests that screen for low-criticality conditions (i.e., those with $TPS_{i}<TPS_{Cutoff}$)[cite: 39]. [cite_start]These low-utility items are then sorted using a secondary greedy criterion: **ascending immediate resource demand**[cite: 40]. [cite_start]This ensures the system selects the most resource-efficient low-criticality items first, thereby meeting the equity quota while minimizing consumption of bottleneck resources[cite: 41]. [cite_start]A test is scheduled only if it passes the immediate feasibility check and respects the budget[cite: 42]. [cite_start]This phase terminates exactly when the equity target count is met or when no further low-criticality tests can be scheduled due to resource/budget exhaustion[cite: 43].
+This initial phase is strictly mandatory and operates as a pre-processing constraint to satisfy the $T_{Equity}$ policy. The algorithm first identifies the subset of tests that screen for low-criticality conditions (i.e., those with $TPS_{i}<TPS_{Cutoff}$). These low-utility items are then sorted using a secondary greedy criterion: **ascending immediate resource demand**. This ensures the system selects the most resource-efficient low-criticality items first, thereby meeting the equity quota while minimizing consumption of bottleneck resources[cite: 41]. [cite_start]A test is scheduled only if it passes the immediate feasibility check and respects the budget. This phase terminates exactly when the equity target count is met or when no further low-criticality tests can be scheduled due to resource/budget exhaustion[cite: 43].
 
 #### Phase 2: Priority Triage (Utility Maximization)
 
